@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "ptsup  src --dts --meta --clean"
+    "build": "ptsup src --dts --meta --clean"
   },
   "keywords": [
     "typescript"

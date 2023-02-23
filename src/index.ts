@@ -11,3 +11,23 @@ export type {
   SpecificFunction,
   SpecificInterface,
 } from './types'
+
+import * as  comment from './comment'
+import * as  convert from './convert'
+import * as  definition from './definition'
+import * as  functions from './function'
+import * as  imports from './import'
+import * as  interfaces from './interface'
+import * as  object from './object'
+
+const factory = {
+  ...comment,
+  ...convert,
+  ...definition,
+  ...functions,
+  ...imports,
+  ...interfaces,
+  ...object,
+}
+
+export default factory
