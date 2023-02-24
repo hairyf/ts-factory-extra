@@ -1,19 +1,19 @@
 import ts, { factory } from 'typescript'
-import type { SpecificFunction, SpecificFiled } from './types'
-import {createMultilineComment} from './comment'
+import type { SpecificFiled, SpecificFunction } from './types'
+import { createMultilineComment } from './comment'
 
 /**
  * create Function
  * @example [o.export] function [o.name] ([o.parameters]) { [o.body] }
- * @param o 
- * @returns 
+ * @param o
+ * @returns
  */
 export function createFunction(o: SpecificFunction) {
   const exportModifier = factory.createModifier(ts.SyntaxKind.ExportKeyword)
   const functionName = factory.createIdentifier(o.name)
   const parameters = o.parameters?.map(createParameter) || []
   let comment
-  
+
   const functionNode = factory.createFunctionDeclaration(
     [exportModifier],
     undefined,
@@ -21,7 +21,7 @@ export function createFunction(o: SpecificFunction) {
     undefined,
     parameters,
     undefined,
-    o.body ? factory.createBlock(o.body, true) : undefined
+    o.body ? factory.createBlock(o.body, true) : undefined,
   )
 
   if (o.comment?.length)
@@ -33,7 +33,7 @@ export function createFunction(o: SpecificFunction) {
  * create Function Parameter
  * @example function name([o.name]:[o.type])
  * @param o
- * @returns 
+ * @returns
  */
 export function createParameter(o: SpecificFiled) {
   return factory.createParameterDeclaration(

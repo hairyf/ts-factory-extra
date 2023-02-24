@@ -27,19 +27,19 @@ export function createMultilineComment(docs: string[] | string) {
       `* ${docs[0]} `,
       true,
     )
-    return typeDeclWithComment as never
+    return typeDeclWithComment as any as ts.JSDoc
   }
   const comment = factory.createJSDocComment(
     docs.join('\n'),
     [],
   )
-  return comment as never
+  return comment
 }
 
 /**
  * create Single/Multi comment
- * @param type 
- * @param docs 
+ * @param type
+ * @param docs
  */
 export function createComment(type: 'single' | 'multi', docs: string[] | string) {
   if (type === 'single' && typeof docs === 'string')

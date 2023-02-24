@@ -1,16 +1,17 @@
 import ts, { factory } from 'typescript'
 import { createMultilineComment } from './comment'
-import { SpecificFiled } from './types'
+import { createExportModifier } from './modifier'
+import type { SpecificFiled } from './types'
 
 /**
  * create Type Alias
  * @example [flag] [name] = [value]
  * @example const a = 2
- * @param name 
- * @param value 
+ * @param name
+ * @param value
  */
-export function createVariable(flag: ts.NodeFlags, name: string, value?: string) {
-  return factory.createVariableDeclarationList(
+export function createVariable(_export: boolean | undefined, flag: ts.NodeFlags, name: string, value?: string) {
+  const declaration = factory.createVariableDeclarationList(
     [factory.createVariableDeclaration(
       factory.createIdentifier(name),
       undefined,
@@ -18,29 +19,36 @@ export function createVariable(flag: ts.NodeFlags, name: string, value?: string)
       value ? factory.createIdentifier(value) : undefined,
     )],
     flag,
-  ) as any as ts.TypeAliasDeclaration
+  )
+  if (_export === true) {
+    return factory.createVariableStatement(
+      [createExportModifier()],
+      declaration,
+    )
+  }
+  return declaration
 }
 
 /**
  * create Type Alias
  * @example type [name] = [value]
- * @param name 
- * @param value 
+ * @param name
+ * @param value
  */
-export function createTypeAlias(name: string, value: string) {
+export function createTypeAlias(_export: boolean | undefined, name: string, value: string) {
   return factory.createTypeAliasDeclaration(
-    undefined,
+    _export === true ? [createExportModifier()] : undefined,
     factory.createIdentifier(name),
     undefined,
     factory.createIdentifier(value) as any,
-  ) as any as ts.TypeAliasDeclaration
+  )
 }
 
 /**
  * create Type Alias Block
  * @example { [item.name]: [item.type], ... }
- * @param alias 
- * @returns 
+ * @param alias
+ * @returns
  */
 export function createTypeAliasBlock(alias: SpecificFiled[]) {
   const statements = alias

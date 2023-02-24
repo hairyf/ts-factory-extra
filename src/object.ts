@@ -4,7 +4,7 @@ import type { LiteralFiled } from './types'
 /**
  * create Object Literal Filed
  * @example config, type: 'A', ...b
- * @param filed 
+ * @param filed
  */
 export function createObjectLiteral(filed: LiteralFiled) {
   if (typeof filed === 'string') {

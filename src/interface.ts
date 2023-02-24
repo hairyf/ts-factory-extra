@@ -1,14 +1,14 @@
 import ts, { factory } from 'typescript'
 import { createMultilineComment } from './comment'
-import type { SpecificInterface, SpecificFiled } from './types'
+import type { SpecificFiled, SpecificInterface } from './types'
 
 patchInterfaceComment()
 
 /**
  * create Interface
  * @example [o.export] interface [o.name] { [properties] }
- * @param o 
- * @returns 
+ * @param o
+ * @returns
  */
 export function createInterface(o: SpecificInterface) {
   const exportModifier = factory.createModifier(ts.SyntaxKind.ExportKeyword)
@@ -22,7 +22,7 @@ export function createInterface(o: SpecificInterface) {
     .filter(Boolean) as any
 
   return factory.createInterfaceDeclaration(
-    o.export === true ?  [exportModifier] : undefined,
+    o.export === true ? [exportModifier] : undefined,
     interfaceName,
     undefined,
     undefined,
@@ -35,7 +35,7 @@ export function createInterface(o: SpecificInterface) {
  * @example [filed.name][filed.required]: [filed.type]
  * @example a?: string
  * @param filed
- * @returns 
+ * @returns
  */
 export function createInterfaceProperty(filed: SpecificFiled) {
   return factory.createPropertySignature(
@@ -46,10 +46,9 @@ export function createInterfaceProperty(filed: SpecificFiled) {
   )
 }
 
-
 function patchInterfaceComment() {
   const isTypeElement = ts.isTypeElement
-  ts.isTypeElement = function(node): node is ts.TypeElement {
-    return isTypeElement(node) || ts.isJSDoc(node) || ts.isIdentifier(node) 
+  ts.isTypeElement = function (node): node is ts.TypeElement {
+    return isTypeElement(node) || ts.isJSDoc(node) || ts.isIdentifier(node)
   }
 }

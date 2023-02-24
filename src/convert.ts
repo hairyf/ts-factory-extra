@@ -2,7 +2,7 @@ import ts from 'typescript'
 
 /**
  * { ast object } > typescript string
- * @param node 
+ * @param node
  */
 export function astNodeToCode(node: ts.Node | ts.Node[]) {
   if (!Array.isArray(node))
@@ -16,7 +16,7 @@ export function astNodeToCode(node: ts.Node | ts.Node[]) {
 
 /**
  * typescript string > { ast object }
- * @param code 
+ * @param code
  */
 export function codeToAstNode(code: string) {
   const resultFile = ts.createSourceFile('func.ts', code, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS)
