@@ -1,15 +1,16 @@
 import { factory } from 'typescript'
-import ts from 'typescript'
 
 /**
  * create Import
  * @example import [namedInput], {[namedInputs]} from [value]
  * @example import http, { AxiosConfig } from 'axios'
- * @param namedInput 
- * @param namedInputs 
- * @param value 
+ * @param namedInput
+ * @param namedInputs
+ * @param value
  */
-export function createImport(namedInput: string | undefined, namedInputs: string[] | undefined, value: string) {
+export function createImport(namedInput: string | undefined, namedInputs: string[] | undefined, value: string, namespace: boolean | undefined) {
+  if (namespace)
+    return createNamespaceImport(namedInput!, value)
   return factory.createImportDeclaration(
     undefined,
     factory.createImportClause(
@@ -33,8 +34,8 @@ export function createImport(namedInput: string | undefined, namedInputs: string
 /**
  * create Namespace Import
  * @example import * as [namedInput] from [value]
- * @param namedInput 
- * @param value 
+ * @param namedInput
+ * @param value
  */
 export function createNamespaceImport(namedInput: string, value: string) {
   return factory.createImportDeclaration(
@@ -46,5 +47,5 @@ export function createNamespaceImport(namedInput: string, value: string) {
     ),
     factory.createStringLiteral(value),
     undefined,
-  ) as any as ts.TypeAliasDeclaration
+  )
 }
