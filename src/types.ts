@@ -1,5 +1,11 @@
 import type ts from 'typescript'
 
+export interface SpecificGeneric {
+  name: string
+  extends?: string
+  default?: string
+}
+
 export interface SpecificFunction {
   /**
    * function name
@@ -21,6 +27,22 @@ export interface SpecificFunction {
    * function comment
    */
   comment?: string | string[]
+  /**
+   * async function
+   */
+  async?: boolean
+  /**
+   * generator function
+   */
+  generator?: boolean
+  /**
+   * return type
+   */
+  returnType?: string
+  /**
+   * generics
+   */
+  generics?: SpecificGeneric[]
 }
 
 export interface SpecificInterface {
@@ -37,8 +59,7 @@ export interface SpecificInterface {
    */
   export?: boolean
   /**
-   * generic type parameters
-   * @example ['T', 'K'] > interface Name<T, K> { }
+   * generics
    */
   generics?: string[]
 }

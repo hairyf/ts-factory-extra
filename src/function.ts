@@ -9,18 +9,27 @@ import { createMultilineComment } from './comment'
  * @returns
  */
 export function createFunction(o: SpecificFunction) {
-  const exportModifier = factory.createModifier(ts.SyntaxKind.ExportKeyword)
   const functionName = factory.createIdentifier(o.name)
   const parameters = o.parameters?.map(createParameter) || []
-  let comment
+  let comment: ts.JSDoc | undefined
 
   const functionNode = factory.createFunctionDeclaration(
-    [exportModifier],
-    undefined,
+    [
+      o.export && factory.createModifier(ts.SyntaxKind.ExportKeyword),
+      o.async && factory.createModifier(ts.SyntaxKind.AsyncKeyword),
+    ].filter(Boolean) as ts.Modifier[],
+    o.generator ? factory.createToken(ts.SyntaxKind.AsteriskToken) : undefined,
     functionName,
-    undefined,
+    o.generics?.map((g) =>
+      factory.createTypeParameterDeclaration(
+        undefined,
+        factory.createIdentifier(g.name),
+        g.extends ? factory.createTypeReferenceNode(g.extends) : undefined,
+        g.default ? factory.createTypeReferenceNode(g.default) : undefined,
+      ),
+    ),
     parameters,
-    undefined,
+    o.returnType ? factory.createTypeReferenceNode(o.returnType) : undefined,
     o.body ? factory.createBlock(o.body, true) : undefined,
   )
 

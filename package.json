@@ -1,6 +1,6 @@
 {
   "name": "ts-factory-extra",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "packageManager": "pnpm@10.17.1",
   "main": "/src/index.ts",
