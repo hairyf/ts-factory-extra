@@ -36,6 +36,11 @@ export interface SpecificInterface {
    * is export
    */
   export?: boolean
+  /**
+   * generic type parameters
+   * @example ['T', 'K'] > interface Name<T, K> { }
+   */
+  generics?: string[]
 }
 
 export interface SpecificFiled {

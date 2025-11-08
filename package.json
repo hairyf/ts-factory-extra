@@ -1,7 +1,8 @@
 {
   "name": "ts-factory-extra",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
+  "packageManager": "pnpm@10.17.1",
   "main": "/src/index.ts",
   "publishConfig": {
     "directory": "dist",

@@ -7,6 +7,7 @@ patchInterfaceComment()
 /**
  * create Interface
  * @example [o.export] interface [o.name] { [properties] }
+ * @example [o.export] interface [o.name]<[o.generics]> { [properties] }
  * @param o
  * @returns
  */
@@ -21,10 +22,19 @@ export function createInterface(o: SpecificInterface) {
   })
     .filter(Boolean) as any
 
+  const typeParameters = o.generics?.map((name) =>
+    factory.createTypeParameterDeclaration(
+      undefined,
+      factory.createIdentifier(name),
+      undefined,
+      undefined,
+    ),
+  )
+
   return factory.createInterfaceDeclaration(
     o.export === true ? [exportModifier] : undefined,
     interfaceName,
-    undefined,
+    typeParameters,
     undefined,
     properties,
   )
